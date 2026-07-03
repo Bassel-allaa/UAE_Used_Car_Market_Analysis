@@ -1,0 +1,30 @@
+# Environment
+venv/
+__pycache__/
+*.pyc
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Raw scraped data - large, regenerable via scraper/extractors/*.py,
+# not meant to live in version control. The final cleaned dataset in
+# data/processed/ is the actual deliverable.
+data/raw/
+
+# Orphaned from the old Config/BaseScraper architecture (batch_manager.py,
+# removed) - nothing in the current pipeline writes here, but keeping
+# these ignored in case that changes later.
+data/sessions/
+logs/
+
+# One-off debugging/diagnostic artifacts generated during development -
+# useful at the time, not part of the portfolio deliverable.
+data/processed/_diagnostic_report.txt
+data/processed/_outliers_price.csv
+data/processed/_outliers_mileage.csv
+data/processed/_debug_*.json
+data/processed/_debug_*.html
+
+# OS cruft
+.DS_Store
+Thumbs.db
