@@ -13,6 +13,7 @@ Every number in this README comes from an actual run of the notebooks in this re
   - [2. Cleaning](#2-cleaning)
   - [3. Exploratory Analysis](#3-exploratory-analysis)
   - [4. Modeling and Analysis](#4-modeling-and-analysis)
+- [Key Takeaways](#key-takeaways)
 - [Tech Stack](#tech-stack)
 - [Project Structure](#project-structure)
 - [Skills Demonstrated](#skills-demonstrated)
@@ -83,7 +84,7 @@ A fuzzy-match dedup step (`src/dedup.py`) then runs across all three sources —
 
 *Notebook: `03_eda.ipynb`*
 
-Eleven charts, UAE-flag-themed throughout (black, red, gold, green).
+Eleven charts, using a single blue gradient throughout — the deepest navy marks the highest value in any ranking or category, lightening as values fall.
 
 **Chart 1 — Price Distribution**
 
@@ -107,31 +108,31 @@ A clean gradient from Dubai down to Ras Al Khaimah, tracking roughly with each e
 
 ![Price Distribution by Emirate](data/processed/chart_city_boxplot.png)
 
-The boxes overlap far more than Chart 3's bar heights suggest — Sharjah through Ras Al Khaimah sit almost on top of each other. That overlap is the tell that emirate-level price differences aren't really a location premium (Chart 8 explains what's actually driving it).
+The boxes overlap far more than Chart 3's bar heights suggest — Sharjah through Ras Al Khaimah sit almost on top of each other. That overlap is the tell that emirate-level price differences aren't really a location premium (Chart 5, next, explains what's actually driving it).
 
-**Chart 5 — Depreciation Curves by Brand Segment**
+**Chart 5 — Brand Segment Composition by Emirate**
+
+![Brand Segment Composition by Emirate](data/processed/chart_segment_emirate_heatmap.png)
+
+This is the chart that actually explains the overlap in Chart 4, which is why it sits right after it. Dubai has both the lowest Mass-market share and the highest Luxury share of any emirate; Ras Al Khaimah sits at the opposite end. It's not that a car costs more just for being listed in Dubai — Dubai's overall mix of what's for sale skews more expensive to begin with.
+
+**Chart 6 — Depreciation Curves by Brand Segment**
 
 ![Depreciation Curves](data/processed/chart_depreciation.png)
 
 Luxury drops fastest early on, which tracks with new-car pricing generally. The more interesting bit is at the far right: Mid-range actually dips below Mass-market by year 14-15 — older mainstream American and European cars seem to lose value harder in their final years than economy Japanese and Korean cars at the same age.
 
-**Chart 6 — Value Retention by Model**
+**Chart 7 — Value Retention by Model**
 
 ![Value Retention by Model](data/processed/chart_value_retention.png)
 
 Toyota Fortuner tops the list, with the Suzuki Swift and Hilux close behind. What stood out: the Land Cruiser sits only mid-pack despite its usual reputation as the GCC benchmark, and the Mercedes G-Class shows up near the bottom — likely a recent near-new price spike distorting the ratio rather than the car genuinely losing value faster.
 
-**Chart 7 — Price Tier Composition by Car Age**
+**Chart 8 — Price Tier Composition by Car Age**
 
 ![Price Tier Composition by Car Age](data/processed/chart_tier_by_age.png)
 
 About as textbook as this kind of chart gets — Budget is almost nonexistent among 0-2 year old cars and dominates everything by 13+ years. Depreciation working exactly the way you'd expect.
-
-**Chart 8 — Brand Segment Composition by Emirate**
-
-![Brand Segment Composition by Emirate](data/processed/chart_segment_emirate_heatmap.png)
-
-This is the chart that actually explains Chart 4. Dubai has both the lowest Mass-market share and the highest Luxury share of any emirate; Ras Al Khaimah sits at the opposite end. It's not that a car costs more just for being listed in Dubai — Dubai's overall mix of what's for sale skews more expensive to begin with.
 
 **Chart 9 — Annual Mileage by Brand Segment**
 
@@ -150,6 +151,7 @@ This one didn't go the way I expected. AutoTraders.ae is where the exotic dealer
 ![Brand Segment Composition by Source](data/processed/chart_segment_by_source.png)
 
 This squares Chart 10 with what browsing the listings actually felt like — AutoTraders.ae genuinely does carry the largest Premium-plus-Luxury share of the three. Composition and median price just aren't the same thing: OpenSooq's mix leans hardest toward Mass-market, and CarSwitch's certified-marketplace pricing apparently outweighs its segment mix. Both true at once.
+
 
 ### 4. Modeling and Analysis
 
@@ -174,6 +176,22 @@ Model 1's low R² traced back to the Luxury segment containing both genuine hype
 3. The outliers turned out to be genuine classic/collector cars (a 1974 Corvette, several Nissan Skylines including a likely R34 GT-R at AED 2.95M) — a linear age term assumes price declines forever, which doesn't hold for cars old enough to be collectible again.
 4. Excluding cars over 25 years old plus the Nissan Skyline nameplate specifically brought the standard deviation down from 480 to 137.
 5. What remained was two different problems: Rolls-Royce Cullinan and Porsche 911 Carrera listings priced correctly but poorly predicted (too few comparable listings at that price tier), and a handful of likely data-entry errors. At that point, chasing individual cases further stopped being productive — documented as a known limitation instead, with `value_gap_aed` kept as the more trustworthy ranking metric.
+
+---
+
+## Key Takeaways
+
+The market-level findings this project surfaced, stated plainly:
+
+1. **Emirate price gaps are a composition effect, not a location premium.** Dubai's higher median price isn't the same car costing more in Dubai — it's that Dubai's inventory skews toward Premium and Luxury segments in the first place. Controlling for what's actually being sold, the "expensive emirate" story mostly dissolves (Charts 4–5, confirmed by the regression).
+
+2. **Where a car is listed moves its price independent of the car itself.** Holding make, model, mileage, and age constant, the same car lists roughly AED 29,861 *lower* on CarSwitch than on AutoTraders.ae — the opposite of what raw medians imply. Platform choice is a real, measurable pricing factor for buyers and sellers, not just a venue.
+
+3. **Value retention is model-specific, and reputation doesn't always match the data.** Toyota Fortuner, Suzuki Swift, and Hilux retain value best; the Land Cruiser lands only mid-pack despite its GCC benchmark reputation. For anyone buying to resell, the nameplate-level retention ranking is more actionable than segment-level generalisations.
+
+4. **Luxury cars are driven far less — they behave like status/lease assets.** Annual mileage for the Luxury segment sits in a different band entirely from the other three, consistent with these being second cars, leases, or collector pieces rather than daily drivers. That also distorts naive depreciation models, which assume price falls with age indefinitely.
+
+5. **Pricing is only weakly predictable from headline features alone (R² ≈ 0.22).** Make, model, mileage, and age explain a modest share of price variance; the rest lives in trim, condition, spec, and seller type. A practical takeaway for any pricing tool: model *specific* make-and-model, not broad segments, and expect meaningful residual uncertainty at the top of the market where comparable listings are thin.
 
 ---
 
