@@ -1,16 +1,3 @@
-"""
-dedup.py - cross-source deduplication.
-
-Drop into: D:\\Final_Projects\\dubizzle-uae-cars\\src\\dedup.py
-(overwrite the previous version - dubicars removed since that site is off
-the list, and this version documents the schema mismatch between
-carswitch_clean.csv (already has engineered features) and the two raw
-master files (not yet cleaned) - see merge_and_dedup() notes below.
-
-Usage:
-    python scraper/dedup.py
-"""
-
 import logging
 from pathlib import Path
 from itertools import combinations

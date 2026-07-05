@@ -1,24 +1,3 @@
-"""
-extractors/opensooq.py
-
-Drop into: D:\\Final_Projects\\dubizzle-uae-cars\\src\\extractors\\opensooq.py
-(overwrite the previous version)
-
-CONFIRMED exact structure from your _debug_opensooq_next_data.json dump -
-no more guessing. The real path is:
-
-    data["props"]["pageProps"]["serpApiResponse"]["listings"]["items"]
-
-Each item looks like:
-    title: "2022 Nissan Frontier Crew Cab SV"
-    highlights: "Nissan " Frontier " 2,022 " Used"   (brand/model/year/condition)
-    price_amount: "60,000 AED"
-    kilometers_Cars_value_i: "61300"
-    city_label: "Um Al Quwain"
-    id: 279819721
-    post_url: "/search/279819721"   (relative, needs domain prepended)
-"""
-
 import sys
 from pathlib import Path
 from typing import List, Dict, Any, Optional

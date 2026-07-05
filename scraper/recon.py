@@ -1,30 +1,3 @@
-"""
-recon.py — RUN THIS FIRST, for each site, before trusting the extractors.
-
-I (Claude) confirmed these three sites return real pages with no bot-block
-wall, but I can't see raw HTML/CSS class names from here the way your
-browser's dev tools can. This script dumps what actually exists on the page
-so we can lock in real selectors instead of guessed ones.
-
-Usage:
-    python src/recon.py https://www.dubicars.com/dubai/used
-    python src/recon.py https://uae.autotraders.ae/used-cars
-    python src/recon.py https://ae.opensooq.com/en/cars/cars-for-sale
-
-What to do with the output:
-    1. Check "JSON-LD blocks found" — if it lists Car/Vehicle/Product types,
-       tell me and I'll switch that extractor to pure JSON-LD (easiest case).
-    2. Check "Candidate listing links" — these are hrefs that look like
-       individual listing pages. Paste me 3-4 real examples and I'll write
-       an exact regex/selector instead of the generic one.
-    3. Check "Pagination candidates" — tells us if next-page is a
-       rel="next" link, a "Next" button, or numbered links, so
-       find_next_page_url() in common.py actually works.
-    4. Open one listing URL in your browser, right-click a price/mileage
-       element -> Inspect, and send me the class name if the fallback
-       parser in the extractor doesn't pick it up correctly on a test run.
-"""
-
 import sys
 import re
 from collections import Counter

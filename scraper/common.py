@@ -1,8 +1,6 @@
 """
 common.py — shared utilities for the multi-source UAE used-car scraper.
 
-Drop this into: D:\\Final_Projects\\dubizzle-uae-cars\\src\\common.py
-
 Used by every extractor (dubicars.py, autotraders.py, opensooq.py) so cleaning
 logic and request handling stays consistent across sources.
 """

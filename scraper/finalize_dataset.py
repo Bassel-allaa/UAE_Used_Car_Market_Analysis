@@ -1,10 +1,6 @@
 """
 finalize_dataset.py
 
-Drop into: D:\\Final_Projects\\dubizzle-uae-cars\\src\\finalize_dataset.py
-(overwrite the previous version - this one is built from the full brand
-list in your diagnostic report, not a partial placeholder)
-
 What this does, based on _diagnostic_report.txt findings:
   1. Normalizes brand-name spelling/casing duplicates (Mercedes-Benz vs
      Mercedes Benz vs Mercedes, MINI vs Mini, RAM vs Ram, etc.)

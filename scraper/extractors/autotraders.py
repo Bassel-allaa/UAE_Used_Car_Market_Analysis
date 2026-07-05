@@ -1,25 +1,3 @@
-"""
-extractors/autotraders.py
-
-Drop into: D:\\Final_Projects\\dubizzle-uae-cars\\src\\extractors\\autotraders.py
-(overwrite the previous version)
-
-CONFIRMED exact structure from your _debug_autotraders_raw.html dump (after
-fixing the Brotli header bug in common.py - the site was fine all along):
-
-  Container:   div.car-card
-  Detail link: a.car-card-content-link (or a.car-card-media-link) href
-               e.g. https://uae.autotraders.ae/used-cars/kia/k5/no-trim/2025/kia-k5-gt-line-2025-171965
-  Title:       h2.car-card-title > span   -> "Kia K5 GT LINE 2025"
-  Brand/model: div.car-card-subline       -> "Kia  -  K5"
-  Seller:      span.seller-name           -> "Private Seller" or dealer name
-  Location:    div.car-card-meta          -> "Cars in Ajman"
-  Chips:       div.chips > span.chip      -> "Year 2025", "KM 8,700", "Spec GCC / Import"
-  Price:       div.car-card-price-amount  -> "AED 95,000"
-  Pagination:  ?page=N, confirmed via <li class="next"><a href="...?page=N">&raquo;</a></li>
-               730 total pages x 24 cards/page ~ 17,500 - matches earlier estimate.
-"""
-
 import sys
 import re
 from pathlib import Path

@@ -5,29 +5,7 @@ Saves the raw response Python actually receives from each site to disk, so
 we can inspect real structure directly instead of guessing at heuristics
 that keep grabbing the wrong nested array.
 
-Usage:
-    python scraper/dump_raw.py opensooq
-    python scraper/dump_raw.py autotraders
-
-What to do with the output:
-
-  opensooq -> writes data/raw/_debug_opensooq_next_data.json
-    Open it in VS Code, Ctrl+F for a price you saw in the CSV (e.g. "60000")
-    or a brand name ("Nissan"). Look at the key path around that match -
-    paste me ~10-15 lines of context and I'll hardcode the exact path
-    instead of the current "biggest array with a price key" guess.
-
-  autotraders -> writes data/raw/_debug_autotraders_raw.html
-    Open it and Ctrl+F for "car-card" or "AED" or a car you saw on the
-    site (e.g. "Kia K5"). Two outcomes:
-      - FOUND -> the data is embedded in the raw response (likely as a
-        Next.js React Server Components payload inside a <script> tag,
-        not standard HTML). Tell me and I'll write a parser for that.
-      - NOT FOUND -> it's genuinely fetched by JS after load. We need the
-        real network request from DevTools (try the "Fetch" filter, not
-        just "XHR", and check if it only fires after scrolling).
 """
-
 import sys
 import json
 from pathlib import Path

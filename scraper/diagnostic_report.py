@@ -1,14 +1,4 @@
-"""
-diagnostic_report.py - one-time diagnostic, not part of the regular pipeline.
 
-Dumps a full picture of the combined dataset (data/processed/uae_cars_combined_deduped.csv)
-so we can plan the cleaning/EDA/analysis rebuild against real numbers instead
-of piecemeal discoveries. Run once, share the output file, and we build the
-brand_segment map + cleaning logic in one pass.
-
-Usage:
-    python scraper/diagnostic_report.py
-"""
 
 from pathlib import Path
 import pandas as pd
